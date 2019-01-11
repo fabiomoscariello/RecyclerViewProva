@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private Button inserisciAnimaleButton;
     private Button scegliImmagineButton;
     private ArrayList<Animale> listaAnimali;
-
+    private AnimaleAdapter adapter;
     private int PICK_IMAGE_REQUEST = 1;
     private static final int REQUEST_CODE_IMAGE = 100;
     private static final int REQUEST_CODE_PERMISSIONS = 101;
@@ -48,22 +48,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listaAnimali = new ArrayList<Animale>();
-        Log.d(TAG,"PRova bello prova");
-        Log.d(TAG,"branch");
         listaAnimali.add(new Animale("Cane"));
         listaAnimali.add(new Animale("Gatto"));
+        adapter=new AnimaleAdapter(listaAnimali);
         listaAnimaliView = findViewById(R.id.listaAnimaliView_id);
         listaAnimaliView.setHasFixedSize(true);
         listaAnimaliView.setLayoutManager(new LinearLayoutManager(this));
-        listaAnimaliView.setAdapter(new AnimaleAdapter(listaAnimali));
+        listaAnimaliView.setAdapter(adapter);
         animaleEditText = findViewById(R.id.animaleEditText_id);
         inserisciAnimaleButton = findViewById(R.id.inserisciAnimaleButton_id);
         scegliImmagineButton = findViewById(R.id.scegliImmagine_id);
         inserisciAnimaleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listaAnimali.add(new Animale(animaleEditText.getText().toString()));
-
+                Log.d(TAG,""+uri.toString());
+                Log.d(TAG,""+listaAnimali.size());
+                if(uri.equals(null)){
+                    listaAnimali.add(new Animale(animaleEditText.getText().toString()));
+                }
+                listaAnimali.add(new Animale(animaleEditText.getText().toString(),uri));
+                Log.d(TAG,""+listaAnimali.size());
+                adapter.setDataSet(listaAnimali);
+                listaAnimaliView.setAdapter(adapter);
             }
         });
         scegliImmagineButton.setOnClickListener(new View.OnClickListener() {
@@ -117,19 +123,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Uri handleImageRequestResult(Intent data) {
-        Uri imageUri = null;
+        uri = null;
         if (data.getClipData() != null) {
-            imageUri = data.getClipData().getItemAt(0).getUri();
+            uri = data.getClipData().getItemAt(0).getUri();
         } else if (data.getData() != null) {
-            imageUri = data.getData();
-
+            uri = data.getData();
         }
 
-        if (imageUri == null) {
-            //Log.e(TAG, "Invalid input image Uri.");
+        if (uri == null) {
+            //Log.e(TAG, "Invalid input image uri.");
             return null;
         }
-        return imageUri;
+        return uri;
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG, TAG + "onActivityResult");
