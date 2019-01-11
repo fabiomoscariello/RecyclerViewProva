@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listaAnimali = new ArrayList<Animale>();
-        Log.d(TAG,"PRova bello");
+        Log.d(TAG,"PRova bello prova");
+        Log.d(TAG,"branch");
         listaAnimali.add(new Animale("Cane"));
         listaAnimali.add(new Animale("Gatto"));
         listaAnimaliView = findViewById(R.id.listaAnimaliView_id);
