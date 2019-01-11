@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RecyclerViewProva</string>
+    <string name="ins_name">Inserisci un\'animale</string>
+    <string name="animale_name">Animale</string>
+</resources>
