@@ -14,6 +14,14 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class AnimaleAdapter extends RecyclerView.Adapter<AnimaleViewHolder> {
+    public ArrayList<Animale> getDataSet() {
+        return dataSet;
+    }
+
+    public void setDataSet(ArrayList<Animale> dataSet) {
+        this.dataSet = dataSet;
+    }
+
     private ArrayList<Animale> dataSet;
 
 
